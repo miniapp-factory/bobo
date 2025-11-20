@@ -40,13 +40,15 @@ export function ColorMatchTap() {
     };
   }, [level]);
 
-  const handleClick = (color: Color) => {
-    if (color === target) {
+  const handleClick = (id: number) => {
+    const circle = circles.find((c) => c.id === id);
+    if (!circle) return;
+    if (circle.color === target) {
       setScore((s) => s + 1);
     } else {
       setScore((s) => Math.max(0, s - 1));
     }
-    setCircles((prev) => prev.filter((c) => c.id !== color));
+    setCircles((prev) => prev.filter((c) => c.id !== id));
   };
 
   useEffect(() => {
@@ -71,7 +73,7 @@ export function ColorMatchTap() {
             key={c.id}
             variant="outline"
             className={cn(`bg-${c.color}-500`, "w-12 h-12")}
-            onClick={() => handleClick(c.color)}
+            onClick={() => handleClick(c.id)}
           />
         ))}
       </div>
